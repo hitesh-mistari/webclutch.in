@@ -1,7 +1,7 @@
 import React from 'react';
-import PageHeader from "../../components/PageHeader";
-import FAQComponent from "../../components/FAQ";
-import { clinicData } from "../../data/clinicData";
+import PageHeader from "../../../components/PageHeader";
+import FAQComponent from "../../../components/FAQ";
+import { clinicData } from "../../../data/clinicData";
 
 export const metadata = {
   title: "FAQs | The Dental Edge",

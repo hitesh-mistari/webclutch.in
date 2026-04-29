@@ -1,60 +1,63 @@
 import React from 'react';
-import PageHeader from "../../components/PageHeader";
-import Accordion from "../../components/Accordion";
+import PageHeader from "../../../components/PageHeader";
+import Accordion from "../../../components/Accordion";
 
 export const metadata = {
-  title: "Dental Implants | The Dental Edge",
-  description: "Restore your smile's function and aesthetics with our permanent and natural-looking dental implant solutions.",
+  title: "Braces & Aligners | The Dental Edge",
+  description: "Achieve your dream smile with our advanced orthodontic treatments including traditional braces and clear aligners.",
 };
 
-export default function DentalImplantsPage() {
+export default function BracesAndAlignersPage() {
   const faqItems = [
     {
-      title: "Are dental implants safe?",
-      content: "Yes, when done with proper planning, implants are a safe and long-lasting solution."
+      title: "How long does braces treatment take?",
+      content: "It usually takes several months to a couple of years, depending on the case."
     },
     {
-      title: "Is the implant procedure painful?",
-      content: "The procedure is done with care to minimize discomfort."
+      title: "Are braces painful?",
+      content: "You may feel slight discomfort initially, but it adjusts within a few days."
     },
     {
-      title: "How long do implants last?",
-      content: "With proper care, implants can last for many years."
+      title: "Can adults get braces or aligners?",
+      content: "Yes, both options are suitable for adults as well."
     },
     {
-      title: "Can anyone get dental implants?",
-      content: "It depends on your bone condition and overall oral health. A check-up is required."
+      title: "Which is better: braces or aligners?",
+      content: "It depends on your condition and preference. We guide you on the best option."
     },
     {
-      title: "How long does the treatment take?",
-      content: "The process may take a few months, depending on healing time."
+      title: "Do I need to wear retainers after treatment?",
+      content: "Yes, retainers help keep your teeth in their new position."
     }
   ];
 
-  const services = [
-    { title: "Single Tooth Implant", desc: "Replace one missing tooth with a natural-looking fixed solution." },
-    { title: "Multiple Teeth", desc: "Ideal for replacing more than one missing tooth effectively." },
-    { title: "Full Mouth Implants", desc: "Complete solution for patients with multiple missing teeth." },
-    { title: "Supported Crowns", desc: "Strong and durable crowns placed over implants for natural function." },
-    { title: "Detailed Planning", desc: "Detailed check-up and planning before starting treatment." },
-    { title: "Post-Implant Care", desc: "Guidance for proper healing and long-term maintenance." }
+  const treatments = [
+    { title: "Metal Braces", desc: "Traditional and effective option for correcting alignment issues." },
+    { title: "Ceramic Braces", desc: "Less visible braces that blend better with your teeth." },
+    { title: "Clear Aligners", desc: "Removable and nearly invisible option for straightening teeth." },
+    { title: "Alignment Correction", desc: "Treatment for crowded, spaced, or uneven teeth." },
+    { title: "Bite Correction", desc: "Helps improve issues like overbite, underbite, and crossbite." },
+    { title: "Retainers", desc: "Used after treatment to maintain your new alignment." },
+    { title: "Space Closure", desc: "Closes gaps between teeth for a more even and aligned smile." },
+    { title: "Minor Correction", desc: "Suitable for small corrections without full braces treatment." }
   ];
 
   const features = [
     'Proper evaluation first', 
-    'Clear recovery process', 
-    'Safety at every step', 
-    'Modern precision techniques', 
-    'Personalized planning', 
-    'Hygienic clinic environment'
+    'Clear explanation of process', 
+    'Step-by-step guidance', 
+    'Focus on comfort', 
+    'Regular progress tracking', 
+    'Custom options', 
+    'Clean clinic environment'
   ];
 
   return (
     <>
       <PageHeader 
         subtitle="Service Details"
-        title="Dental Implants"
-        description="Restore your smile's function and aesthetics with our permanent and natural-looking dental implant solutions."
+        title="Braces & Aligners"
+        description="Achieve your dream smile with our advanced orthodontic treatments including traditional braces and clear aligners."
       />
 
       <section className="py-12 lg:py-16 bg-white">
@@ -62,16 +65,16 @@ export default function DentalImplantsPage() {
           <div className="flex flex-wrap items-center -mx-4">
             <div className="w-full lg:w-6/12 px-4 mb-16 lg:mb-0">
               <div className="rounded-[20px] overflow-hidden shadow-2xl shadow-blue-900/10 ring-1 ring-black/5 relative">
-                <img src="/images/invisalign-treatment.jpg" className="w-full h-auto" alt="Dental Implants" />
+                <img src="/images/orthodontic-treatments.jpg" className="w-full h-auto" alt="Braces & Aligners" />
               </div>
             </div>
             
             <div className="w-full lg:w-6/12 px-4 lg:pl-16">
-              <div className="subtitle s2 mb-3 text-blue-600 font-semibold uppercase tracking-[1px] text-[14px]">Dental Implants</div>
-              <h2 className="text-[48px] font-bold text-[#0c244c] mb-[20px] leading-tight font-sans">A Strong and Long-Lasting Solution for Missing Teeth</h2>
+              <div className="subtitle s2 mb-3 text-blue-600 font-semibold uppercase tracking-[1px] text-[14px]">Braces & Aligners</div>
+              <h2 className="text-[48px] font-bold text-[#0c244c] mb-[20px] leading-tight font-sans">Straighten Your Teeth with the Right Guidance</h2>
               <p className="text-[#666] text-[18px] mb-[30px] leading-relaxed">
-                Dental implants are a reliable way to replace missing teeth and restore both function and appearance. 
-                At The Dental Edge, we guide you through the process carefully to ensure a safe, comfortable, and well-planned treatment.
+                Braces and aligners help correct misaligned teeth and improve your bite over time. 
+                At The Dental Edge, we guide you through the process step by step, making it simple, comfortable, and easy to follow.
               </p>
             </div>
           </div>
@@ -79,7 +82,7 @@ export default function DentalImplantsPage() {
           <div className="h-px bg-gray-100 my-6 lg:my-8"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((item, idx) => (
+            {treatments.map((item, idx) => (
               <div key={idx} className="p-10 bg-white rounded-[20px] shadow-sm ring-1 ring-black/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
                    <i className="icofont-tooth text-2xl"></i>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import PageHeader from "../../components/PageHeader";
+import PageHeader from "../../../components/PageHeader";
 
 const fallbackImageLinks = [
   'https://lh3.googleusercontent.com/gps-cs-s/AHVAweoVc0GeedbMSYXlJJC_FyuEZW6UyQLaiplZuZFhHSkyjf1L381Zy8WfLGyEOcHCA68EzLeT6-j7vBMJ7VNARQ-NAaxP-m453xayYBKWsU9U-goKVnZiLIkQylF_ZUs0iYUGnWoGdw=w1920-h1080-k-no',

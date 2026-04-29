@@ -1,7 +1,40 @@
 import React from 'react';
 
 const KidsSection = ({ data }) => {
+  const type = data?.type || 'dental';
   const phoneRaw = data?.contact?.phoneRaw || '+917709640743';
+
+  const content = {
+    dental: {
+      badge: 'Your Smile, Our Priority',
+      badgeIcon: 'fa-tooth',
+      title: 'Ready to Improve Your Smile?',
+      subtitle: 'Book your appointment today with our expert dental team and experience world-class care.',
+      card2Title: 'Meet Our Dentist',
+      card2Icon: 'fa-regular fa-user',
+      card3Icon: 'fa-solid fa-tooth',
+    },
+    hair: {
+      badge: 'Advanced Hair Restoration',
+      badgeIcon: 'fa-scissors',
+      title: 'Ready to Transform Your Hair?',
+      subtitle: 'Book your consultation today with our expert hair specialists and experience premium hair care.',
+      card2Title: 'Meet Our Specialist',
+      card2Icon: 'fa-solid fa-user-doctor',
+      card3Icon: 'fa-solid fa-scissors',
+    },
+    skin: {
+      badge: 'Glowing & Healthy Skin',
+      badgeIcon: 'fa-sparkles',
+      title: 'Ready to Rejuvenate Your Skin?',
+      subtitle: 'Book your skin consultation today with our experienced dermatologists for personalized care.',
+      card2Title: 'Meet Our Dermatologist',
+      card2Icon: 'fa-solid fa-user-doctor',
+      card3Icon: 'fa-solid fa-sparkles',
+    }
+  };
+
+  const currentContent = content[type] || content.dental;
 
   return (
     <section className="py-20 lg:py-24 relative overflow-hidden bg-gradient-to-b from-[#f8faff] to-white flex justify-center items-center">
@@ -29,13 +62,13 @@ const KidsSection = ({ data }) => {
           
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100 shadow-sm">
-            <i className="fa-solid fa-tooth text-sm"></i>
-            <span>Your Smile, Our Priority</span>
+            <i className={`fa-solid ${currentContent.badgeIcon} text-sm`}></i>
+            <span>{currentContent.badge}</span>
           </div>
 
           {/* Title */}
           <h2 className="text-4xl md:text-5xl lg:text-[54px] font-extrabold text-[#081839] mb-4 leading-tight tracking-tight">
-            Ready to Improve Your Smile?
+            {currentContent.title}
           </h2>
 
           {/* Decorative Underline Element */}
@@ -47,7 +80,7 @@ const KidsSection = ({ data }) => {
 
           {/* Subtitle */}
           <p className="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Book your appointment today with our expert dental team and experience world-class care.
+            {currentContent.subtitle}
           </p>
 
           {/* Feature Cards */}
@@ -71,10 +104,10 @@ const KidsSection = ({ data }) => {
             <a href="/about" className="flex items-center justify-between p-4 lg:p-5 bg-white border border-blue-50/80 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(12,36,76,0.1)] hover:-translate-y-1 hover:border-blue-100 transition-all group text-left">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                  <i className="fa-regular fa-user text-lg"></i>
+                  <i className={`${currentContent.card2Icon} text-lg`}></i>
                 </div>
                 <div>
-                  <h4 className="text-[#081839] font-bold text-[15px] mb-0.5">Meet Our Dentist</h4>
+                  <h4 className="text-[#081839] font-bold text-[15px] mb-0.5">{currentContent.card2Title}</h4>
                   <p className="text-gray-500 text-[13px] leading-tight mb-0">Learn about our expert team</p>
                 </div>
               </div>
@@ -85,7 +118,7 @@ const KidsSection = ({ data }) => {
             <a href="/services" className="flex items-center justify-between p-4 lg:p-5 bg-white border border-blue-50/80 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(12,36,76,0.1)] hover:-translate-y-1 hover:border-blue-100 transition-all group text-left">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                  <i className="fa-solid fa-tooth text-lg"></i>
+                  <i className={`${currentContent.card3Icon} text-lg`}></i>
                 </div>
                 <div>
                   <h4 className="text-[#081839] font-bold text-[15px] mb-0.5">Explore Treatments</h4>

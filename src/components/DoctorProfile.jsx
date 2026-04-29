@@ -43,7 +43,7 @@ const DoctorProfile = ({ data, clinicName = 'The Dental Edge' }) => {
               {/* Doctor Image Column */}
               <div className="w-full lg:w-5/12">
                 <div className="relative p-6 h-full min-h-[350px]">
-                  <img src="/images/team/1.webp" className="w-full h-full object-cover rounded-[20px] shadow-lg relative z-10" alt="Dr. Tulsi Bhutada Amesar" />
+                  <img src={doctor.image || "/images/team/1.webp"} className="w-full h-full object-cover rounded-[20px] shadow-lg relative z-10" alt={doctor.name} />
                   
                   {/* Floating Badge */}
                   <div className="absolute bottom-12 left-1/2 -translate-x-1/2 lg:left-12 lg:translate-x-0 bg-blue-600 text-white p-4 pr-6 rounded-2xl flex items-center gap-4 z-20 shadow-xl shadow-blue-600/30 whitespace-nowrap">

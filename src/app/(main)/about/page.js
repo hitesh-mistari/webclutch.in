@@ -1,8 +1,8 @@
 import React from 'react';
-import PageHeader from "../../components/PageHeader";
-import AboutSection from "../../components/About";
-import DoctorProfile from "../../components/DoctorProfile";
-import { clinicData } from "../../data/clinicData";
+import PageHeader from "../../../components/PageHeader";
+import AboutSection from "../../../components/About";
+import DoctorProfile from "../../../components/DoctorProfile";
+import { clinicData } from "../../../data/clinicData";
 
 export const metadata = {
   title: "About Us | The Dental Edge",

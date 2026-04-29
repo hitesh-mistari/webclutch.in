@@ -1,6 +1,6 @@
 import React from 'react';
-import PageHeader from "../../components/PageHeader";
-import Accordion from "../../components/Accordion";
+import PageHeader from "../../../components/PageHeader";
+import Accordion from "../../../components/Accordion";
 
 export const metadata = {
   title: "Root Canal Treatment | The Dental Edge",

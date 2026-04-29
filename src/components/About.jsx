@@ -20,10 +20,10 @@ const About = ({ data }) => {
           <div className="w-full lg:w-1/2">
             <div className="grid grid-cols-2 gap-6">
               <div className="rounded-[20px] overflow-hidden shadow-2xl shadow-blue-900/5 ring-1 ring-black/5">
-                <img src="/images/misc/p1.webp" className="w-full h-auto transform hover:scale-105 transition-transform duration-700" alt="About 1" />
+                <img src={aboutData.image1 || "/images/misc/p1.webp"} className="w-full h-auto transform hover:scale-105 transition-transform duration-700" alt="About 1" />
               </div>
               <div className="rounded-[20px] overflow-hidden shadow-2xl shadow-blue-900/5 ring-1 ring-black/5">
-                <img src="/images/misc/p2.webp" className="w-full h-auto transform hover:scale-105 transition-transform duration-700" alt="About 2" />
+                <img src={aboutData.image2 || "/images/misc/p2.webp"} className="w-full h-auto transform hover:scale-105 transition-transform duration-700" alt="About 2" />
               </div>
             </div>
           </div>

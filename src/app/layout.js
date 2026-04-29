@@ -1,6 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { clinicData } from "../data/clinicData";
 import "./globals.css";
 
 export const metadata = {
@@ -22,11 +19,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body className="min-h-full flex flex-col font-sans">
-        <Header name={clinicData.name} phone={clinicData.contact.phone} phoneRaw={clinicData.contact.phoneRaw} />
-        <main className="flex-grow pt-16">
-          {children}
-        </main>
-        <Footer data={clinicData} />
+        {children}
       </body>
     </html>
   );

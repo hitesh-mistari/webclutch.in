@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import PageHeader from "../../components/PageHeader";
-import { clinicData } from "../../data/clinicData";
+import PageHeader from "../../../components/PageHeader";
+import { clinicData } from "../../../data/clinicData";
 
 export default function ContactPage() {
   const contactData = clinicData || {

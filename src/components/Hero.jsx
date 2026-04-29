@@ -12,7 +12,7 @@ const Hero = ({ data }) => {
       {/* Background Image - Only visible on desktop */}
       <div className="absolute inset-0 z-0 hidden lg:block">
         <img 
-          src="/images/misc/hero.png" 
+          src={heroData.bgImage || "/images/misc/hero.png"} 
           className="w-full h-full object-cover object-center"
           alt="Clinic Background"
         />

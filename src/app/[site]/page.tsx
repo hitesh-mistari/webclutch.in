@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { prisma } from '../../lib/prisma';
+import { query } from '../../lib/db';
 import { getTemplate } from '../../components/templates';
 
 interface PageProps {
@@ -11,9 +11,8 @@ export default async function Page({ params }: PageProps) {
   const { site } = await params;
 
   // Fetch site data from the database
-  const siteData = await prisma.site.findUnique({
-    where: { subdomain: site },
-  });
+  const res = await query('SELECT * FROM "Site" WHERE subdomain = $1', [site]);
+  const siteData = res.rows[0];
 
   // Requirement 9: Show "Site not found" if subdomain does not exist
   if (!siteData) {

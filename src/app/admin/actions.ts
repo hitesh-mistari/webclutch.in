@@ -1,13 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '../../lib/prisma';
+import { query } from '../../lib/db';
+import crypto from 'crypto';
 
 export async function getSites() {
   try {
-    const sites = await prisma.site.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+    const res = await query('SELECT * FROM "Site" ORDER BY "createdAt" DESC');
+    const sites = res.rows;
     return { success: true, sites };
   } catch (error: any) {
     console.error('[Action getSites Error]:', error);
@@ -30,23 +30,20 @@ export async function createSite(data: CreateSiteInput) {
     }
 
     // Check if subdomain is unique
-    const existing = await prisma.site.findUnique({
-      where: { subdomain: data.subdomain.toLowerCase() },
-    });
+    const existingRes = await query('SELECT * FROM "Site" WHERE subdomain = $1', [data.subdomain.toLowerCase()]);
+    const existing = existingRes.rows[0];
 
     if (existing) {
       return { success: false, error: 'Subdomain already taken.' };
     }
 
     // Create site
-    const site = await prisma.site.create({
-      data: {
-        subdomain: data.subdomain.toLowerCase(),
-        name: data.name,
-        category: data.category,
-        content: data.content || {},
-      },
-    });
+    const id = crypto.randomUUID();
+    const res = await query(
+      'INSERT INTO "Site" (id, subdomain, name, category, content) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [id, data.subdomain.toLowerCase(), data.name, data.category, data.content || {}]
+    );
+    const site = res.rows[0];
 
     revalidatePath('/admin');
     return { success: true, site };
@@ -58,9 +55,7 @@ export async function createSite(data: CreateSiteInput) {
 
 export async function deleteSite(id: string) {
   try {
-    await prisma.site.delete({
-      where: { id },
-    });
+    await query('DELETE FROM "Site" WHERE id = $1', [id]);
     revalidatePath('/admin');
     return { success: true };
   } catch (error: any) {
@@ -78,14 +73,11 @@ interface UpdateSiteInput {
 
 export async function updateSite(data: UpdateSiteInput) {
   try {
-    const site = await prisma.site.update({
-      where: { id: data.id },
-      data: {
-        name: data.name,
-        category: data.category,
-        content: data.content,
-      },
-    });
+    const res = await query(
+      'UPDATE "Site" SET name = $1, category = $2, content = $3 WHERE id = $4 RETURNING *',
+      [data.name, data.category, data.content, data.id]
+    );
+    const site = res.rows[0];
     revalidatePath('/admin');
     return { success: true, site };
   } catch (error: any) {

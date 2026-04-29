@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '../../../../lib/prisma';
+import { query } from '../../../../lib/db';
 
 export async function GET(
   request: Request,
@@ -8,9 +8,8 @@ export async function GET(
   try {
     const { site } = await params;
 
-    const siteData = await prisma.site.findUnique({
-      where: { subdomain: site },
-    });
+    const res = await query('SELECT * FROM "Site" WHERE subdomain = $1', [site]);
+    const siteData = res.rows[0];
 
     if (!siteData) {
       return NextResponse.json(

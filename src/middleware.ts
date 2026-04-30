@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-/**
- * Proxy function for Next.js 16 multi-tenant routing.
- * This replaces the standard middleware.ts in this specific setup.
- */
-export function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const host = req.headers.get("host") || "";
 
   // Remove port if exists (e.g. localhost:3000 -> localhost)
@@ -16,12 +12,12 @@ export function proxy(req: NextRequest) {
   // Example logic for subdomain extraction:
   // clinic.doc2graphs.com → ["clinic", "doc2graphs", "com"] -> subdomain = "clinic"
   // doc2graphs.com → ["doc2graphs", "com"] -> subdomain = ""
-  // clinic.localhost → ["clinic", "localhost"] -> subdomain = "clinic" (if you want to test locally)
+  // clinic.localhost → ["clinic", "localhost"] -> subdomain = "clinic"
 
   let subdomain = "";
 
   if (parts.length > 2) {
-    // Production: tenant.domain.com
+    // Production: tenant.doc2graphs.com
     subdomain = parts[0];
   } else if (parts.length === 2 && parts[1] === "localhost") {
     // Local: tenant.localhost
@@ -35,13 +31,13 @@ export function proxy(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  // Prevent infinite loops and skip internal paths/assets
+  // Prevent infinite loops and skip internal paths/assets/admin/api
   if (
     pathname.startsWith(`/${subdomain}`) ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/admin") ||
     pathname.startsWith("/_next") ||
-    pathname.includes(".") // static files
+    pathname.includes(".") 
   ) {
     return NextResponse.next();
   }
@@ -50,7 +46,7 @@ export function proxy(req: NextRequest) {
   const url = req.nextUrl.clone();
   url.pathname = `/${subdomain}${pathname}`;
 
-  console.log(`[Proxy] Rewriting ${pathname} to ${url.pathname}`);
+  console.log(`[Middleware] Rewriting ${pathname} to ${url.pathname}`);
   
   return NextResponse.rewrite(url);
 }

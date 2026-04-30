@@ -4,14 +4,14 @@ import { query } from '../../lib/db';
 import { getTemplate } from '../../components/templates';
 
 interface PageProps {
-  params: Promise<{ site: string }>;
+  params: Promise<{ subdomain: string }>;
 }
 
 export default async function Page({ params }: PageProps) {
-  const { site } = await params;
+  const { subdomain } = await params;
 
   // Fetch site data from the database
-  const res = await query('SELECT * FROM "Site" WHERE subdomain = $1', [site]);
+  const res = await query('SELECT * FROM "Site" WHERE subdomain = $1', [subdomain]);
   const siteData = res.rows[0];
 
   // Requirement 9: Show "Site not found" if subdomain does not exist
@@ -24,7 +24,7 @@ export default async function Page({ params }: PageProps) {
           </div>
           <h1 className="text-2xl font-bold mb-2 text-white">404 - Site Not Found</h1>
           <p className="text-slate-400 text-sm leading-relaxed mb-6">
-            The subdomain <span className="text-rose-400 font-mono font-bold">{site}</span> does not exist on our platform.
+            The subdomain <span className="text-rose-400 font-mono font-bold">{subdomain}</span> does not exist on our platform.
           </p>
           <a
             href="http://localhost:3000/admin"

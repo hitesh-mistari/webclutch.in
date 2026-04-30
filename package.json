@@ -26,4 +26,8 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0"
   }
+  "scripts": {
+  "build": "next build",
+  "start": "next start -H 0.0.0.0 -p 3000"
+}
 }

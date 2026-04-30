@@ -1,61 +1,60 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
-  const url = request.nextUrl.clone();
-  const host = request.headers.get('host') || '';
+/**
+ * Proxy function for Next.js 16 multi-tenant routing.
+ * This replaces the standard middleware.ts in this specific setup.
+ */
+export function proxy(req: NextRequest) {
+  const host = req.headers.get("host") || "";
 
-  // Skip internal paths and static files
+  // Remove port if exists (e.g. localhost:3000 -> localhost)
+  const hostname = host.split(":")[0];
+
+  const parts = hostname.split(".");
+
+  // Example logic for subdomain extraction:
+  // clinic.doc2graphs.com → ["clinic", "doc2graphs", "com"] -> subdomain = "clinic"
+  // doc2graphs.com → ["doc2graphs", "com"] -> subdomain = ""
+  // clinic.localhost → ["clinic", "localhost"] -> subdomain = "clinic" (if you want to test locally)
+
+  let subdomain = "";
+
+  if (parts.length > 2) {
+    // Production: tenant.domain.com
+    subdomain = parts[0];
+  } else if (parts.length === 2 && parts[1] === "localhost") {
+    // Local: tenant.localhost
+    subdomain = parts[0];
+  }
+
+  // Skip for main domain or if no subdomain extracted
+  if (!subdomain || subdomain === "www") {
+    return NextResponse.next();
+  }
+
+  const { pathname } = req.nextUrl;
+
+  // Prevent infinite loops and skip internal paths/assets
   if (
-    url.pathname.startsWith('/_next') ||
-    url.pathname.startsWith('/images') ||
-    url.pathname.startsWith('/fonts') ||
-    url.pathname.includes('.')
+    pathname.startsWith(`/${subdomain}`) ||
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/_next") ||
+    pathname.includes(".") // static files
   ) {
     return NextResponse.next();
   }
 
-  // Parse subdomain
-  let subdomain = '';
-  const hostParts = host.split(':'); // Remove port if present
-  const domainParts = hostParts[0].split('.');
+  // Rewrite to the dynamic [subdomain] path
+  const url = req.nextUrl.clone();
+  url.pathname = `/${subdomain}${pathname}`;
 
-  // Root domain examples: doc2graphs.com, localhost
-  // Subdomain examples: dentist.doc2graphs.com, dentist.localhost
-  if (domainParts.length > 1) {
-    if (domainParts[domainParts.length - 1] === 'localhost') {
-      // Local testing: e.g. tenant.localhost
-      if (domainParts.length > 1 && domainParts[0] !== 'localhost') {
-        subdomain = domainParts[0];
-      }
-    } else {
-      // Production: e.g. tenant.doc2graphs.com
-      // We assume if length is 3 or more (e.g. dentist.doc2graphs.com), 
-      // first part is the subdomain. If length is 2 (e.g. doc2graphs.com), it's root.
-      if (domainParts.length >= 3 && domainParts[0] !== 'www') {
-        subdomain = domainParts[0];
-      }
-    }
-  }
-
-  // If path is API or Admin, do NOT rewrite to /[site]
-  if (url.pathname.startsWith('/api') || url.pathname.startsWith('/admin')) {
-    console.log(`[Proxy] Passing through API/Admin - Path: ${url.pathname}, Host: ${host}`);
-    return NextResponse.next();
-  }
-
-  console.log(`[Proxy] Path: ${url.pathname}, Host: ${host}, Subdomain: ${subdomain}`);
-
-  if (subdomain) {
-    // Rewrite subdomain requests to `/[site]` internally
-    url.pathname = `/${subdomain}${url.pathname}`;
-    console.log(`[Proxy] Rewriting to: ${url.pathname}`);
-    return NextResponse.rewrite(url);
-  }
-
-  return NextResponse.next();
+  console.log(`[Proxy] Rewriting ${pathname} to ${url.pathname}`);
+  
+  return NextResponse.rewrite(url);
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ["/((?!_next|favicon.ico).*)"],
 };
